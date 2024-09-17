@@ -14,12 +14,13 @@ function ft_defaults
 %   ft_default.checkconfig       = string, can be 'pedantic', 'loose', 'silent' (default = 'loose')
 %   ft_default.checkpath         = string, can be 'pedantic', 'once', 'no' (default = 'pedantic')
 %   ft_default.checksize         = number in bytes, can be inf (default = 1e5)
+%   ft_default.checkstring       = string, can be 'yes' or 'no' (default = 'yes'), convert "strings" in cfg to 'chars'
 %   ft_default.showlogo          = string, can be 'yes' or 'no' (default = 'yes')
 %   ft_default.showcallinfo      = string, can be 'yes' or 'no' (default = 'yes')
 %   ft_default.trackcallinfo     = string, can be 'yes' or 'no' (default = 'yes')
-%   ft_default.trackconfig       = string, can be 'cleanup', 'report', 'off' (default = 'off')
 %   ft_default.trackusage        = false, or string with salt for one-way encryption of identifying information (by default this is enabled and an automatic salt is created)
 %   ft_default.trackdatainfo     = string, can be 'yes' or 'no' (default = 'no')
+%   ft_default.keepprevious      = string, can be 'yes' or 'no' (default = 'yes')
 %   ft_default.outputfilepresent = string, can be 'keep', 'overwrite', 'error' (default = 'overwrite')
 %   ft_default.debug             = string, can be 'display', 'displayonerror', 'displayonsuccess', 'save', 'saveonerror', saveonsuccess' or 'no' (default = 'no')
 %   ft_default.toolbox.signal    = string, can be 'compat' or 'matlab' (default is automatic, see below)
@@ -81,13 +82,13 @@ if isempty(checkpath)
 end
 
 % ft_warning is located in fieldtrip/utilities, which may not be on the path yet
-if ~exist('ft_warning', 'file')
+if ~initialized && ~exist('ft_warning', 'file')
   ft_warning = @warning;
 end
 
 % locate the file with the persistent FieldTrip preferences
 fieldtripprefs = fullfile(prefdir, 'fieldtripprefs.mat');
-if exist(fieldtripprefs, 'file')
+if ~initialized && exist(fieldtripprefs, 'file')
   prefs       = load(fieldtripprefs); % the file contains multiple fields
   ft_default  = mergestruct(ft_default, prefs);
 end
@@ -96,12 +97,14 @@ end
 % NOTE ft_getopt might not be available on the path at this moment and can therefore not yet be used.
 % NOTE all options here should be explicitly listed as allowed in ft_checkconfig
 
-if ~isfield(ft_default, 'trackconfig'),       ft_default.trackconfig    = 'off';      end % cleanup, report, off
 if ~isfield(ft_default, 'checkconfig'),       ft_default.checkconfig    = 'loose';    end % pedantic, loose, silent
 if ~isfield(ft_default, 'checkpath'),         ft_default.checkpath      = 'pedantic'; end % pedantic, once, no
 if ~isfield(ft_default, 'checksize'),         ft_default.checksize      = 1e5;        end % number in bytes, can be inf
+if ~isfield(ft_default, 'checkstring'),       ft_default.checkstring    = 'yes';      end % yes or no
 if ~isfield(ft_default, 'showlogo'),          ft_default.showlogo       = 'yes';      end % yes or no, this is relevant for SPM and EEGLAB
 if ~isfield(ft_default, 'showcallinfo'),      ft_default.showcallinfo   = 'yes';      end % yes or no, this is used in ft_pre/postamble_provenance
+if ~isfield(ft_default, 'keepprevious'),      ft_default.keepprevious   = 'yes';      end % yes, no, this is used in ft_postamble_previous
+if ~isfield(ft_default, 'keepcfg'),           ft_default.keepcfg        = 'yes';      end % yes, no, this is used in ft_postamble_history
 if ~isfield(ft_default, 'debug'),             ft_default.debug          = 'no';       end % no, save, saveonerror, display, displayonerror, this is used in ft_pre/postamble_debug
 if ~isfield(ft_default, 'outputfilepresent'), ft_default.outputfilepresent = 'overwrite'; end % can be keep, overwrite, error
 
@@ -245,28 +248,31 @@ if ~isdeployed
 
   try
     % external/signal contains alternative implementations of some signal processing functions
+    external_signal = fullfile(fileparts(which('ft_defaults')), 'external', 'signal');
     if ~ft_platform_supports('signal') || ~strcmp(ft_default.toolbox.signal, 'matlab') || ~ft_hastoolbox('signal')
-      addpath(fullfile(fileparts(which('ft_defaults')), 'external', 'signal'));
-    else
-      rmpath(fullfile(fileparts(which('ft_defaults')), 'external', 'signal'));
+      addpath(external_signal);
+    elseif contains(path, external_signal)
+      rmpath(external_signal);
     end
   end
 
   try
     % external/stats contains alternative implementations of some statistics functions
+    external_stats = fullfile(fileparts(which('ft_defaults')), 'external', 'stats');
     if ~ft_platform_supports('stats') || ~strcmp(ft_default.toolbox.stats, 'matlab') || ~ft_hastoolbox('stats')
-      addpath(fullfile(fileparts(which('ft_defaults')), 'external', 'stats'));
-    else
-      rmpath(fullfile(fileparts(which('ft_defaults')), 'external', 'stats'));
+      addpath(external_stats);
+    elseif contains(path, external_stats)
+      rmpath(external_stats);
     end
   end
 
   try
     % external/images contains alternative implementations of some image processing functions
+    external_images = fullfile(fileparts(which('ft_defaults')), 'external', 'images');
     if ~ft_platform_supports('images') || ~strcmp(ft_default.toolbox.images, 'matlab') || ~ft_hastoolbox('images')
-      addpath(fullfile(fileparts(which('ft_defaults')), 'external', 'images'));
-    else
-      rmpath(fullfile(fileparts(which('ft_defaults')), 'external', 'images'));
+      addpath(external_images);
+    elseif contains(path, external_images)
+      rmpath(external_images);
     end
   end
 
@@ -290,7 +296,7 @@ if ~isdeployed
     if ft_platform_supports('matlabversion', -inf, '2013a'), ft_hastoolbox('compat/matlablt2013b', 3, 1); end
     if ft_platform_supports('matlabversion', -inf, '2013b'), ft_hastoolbox('compat/matlablt2014a', 3, 1); end
     if ft_platform_supports('matlabversion', -inf, '2014a'), ft_hastoolbox('compat/matlablt2014b', 3, 1); end
-    if ft_platform_supports('matlabversion', -inf, '2014d'), ft_hastoolbox('compat/matlablt2015a', 3, 1); end
+    if ft_platform_supports('matlabversion', -inf, '2014b'), ft_hastoolbox('compat/matlablt2015a', 3, 1); end
     if ft_platform_supports('matlabversion', -inf, '2015a'), ft_hastoolbox('compat/matlablt2015b', 3, 1); end
     if ft_platform_supports('matlabversion', -inf, '2015b'), ft_hastoolbox('compat/matlablt2016a', 3, 1); end
     if ft_platform_supports('matlabversion', -inf, '2016a'), ft_hastoolbox('compat/matlablt2016b', 3, 1); end
@@ -321,6 +327,7 @@ if ~isdeployed
     ft_hastoolbox('template/anatomy',     1, 1);
     ft_hastoolbox('template/headmodel',   1, 1);
     ft_hastoolbox('template/electrode',   1, 1);
+    ft_hastoolbox('template/gradiometer', 1, 1);
     ft_hastoolbox('template/neighbours',  1, 1);
     ft_hastoolbox('template/sourcemodel', 1, 1);
   end

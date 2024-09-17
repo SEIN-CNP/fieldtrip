@@ -7,8 +7,8 @@ function [cfg] = ft_databrowser(cfg, data)
 % the artifacts.
 %
 % Use as
-%   cfg = ft_databrowser(cfg)
-%   cfg = ft_databrowser(cfg, data)
+%   [cfg] = ft_databrowser(cfg)
+%   [cfg] = ft_databrowser(cfg, data)
 % If you only specify the configuration structure, it should contain the name of the
 % dataset on your hard disk (see below). If you specify input data, it should be a
 % data structure as obtained from FT_PREPROCESSING or from FT_COMPONENTANALYSIS.
@@ -46,9 +46,10 @@ function [cfg] = ft_databrowser(cfg, data)
 %   cfg.selfun                  = string, name of function that is evaluated using the right-click context menu. The selected data and cfg.selcfg are passed on to this function.
 %   cfg.selcfg                  = configuration options for function in cfg.selfun
 %   cfg.seldat                  = 'selected' or 'all', specifies whether only the currently selected or all channels will be passed to the selfun (default = 'selected')
+%   cfg.figure                  = 'yes' or 'no', whether to open a new figure. You can also specify a figure handle from FIGURE, GCF or SUBPLOT. (default = 'yes')
 %   cfg.visible                 = string, 'on' or 'off' whether figure will be visible (default = 'on')
-%   cfg.position                = location and size of the figure, specified as a vector of the form [left bottom width height]
-%   cfg.renderer                = string, 'opengl', 'zbuffer', 'painters', see MATLAB Figure Properties. If this function crashes, you should try 'painters'.
+%   cfg.position                = location and size of the figure, specified as [left bottom width height] (default is automatic)
+%   cfg.renderer                = string, 'opengl', 'zbuffer', 'painters', see RENDERERINFO (default is automatic, try 'painters' when it crashes)
 %   cfg.colormap                = string, or Nx3 matrix, see FT_COLORMAP
 %
 % The following options for the scaling of the EEG, EOG, ECG, EMG, MEG and NIRS channels
@@ -85,7 +86,7 @@ function [cfg] = ft_databrowser(cfg, data)
 % Additional plotting options for the component viewmode:
 %   cfg.gridscale               = scalar, number of points along both directions for interpolation (default = 45 here)
 %   cfg.shading                 = string, 'none', 'flat', 'interp' (default = 'flat')
-%   cfg.interplimits            = string, 'electrodes' or 'mask' (default here = 'mask')
+%   cfg.interplimits            = string, 'sensors' or 'mask' (default here = 'mask')
 %   cfg.interpolation           = string, 'nearest', 'linear', 'natural', 'cubic' or 'v4' (default = 'v4')
 %   cfg.contournum              = topoplot contour lines
 %
@@ -151,7 +152,6 @@ ft_preamble init
 ft_preamble debug
 ft_preamble loadvar data
 ft_preamble provenance data
-ft_preamble trackconfig
 
 % the ft_abort variable is set to true or false in ft_preamble_init
 if ft_abort
@@ -177,6 +177,7 @@ cfg = ft_checkconfig(cfg, 'renamed',    {'anonimize', 'anonymize'}); % fix typo 
 cfg = ft_checkconfig(cfg, 'renamed',    {'anonymise', 'anonymize'}); % use North American and Oxford British spelling
 cfg = ft_checkconfig(cfg, 'renamed',    {'newfigure', 'figure'});
 cfg = ft_checkconfig(cfg, 'deprecated', {'selectfeature'}); % please specify cfg.artfctdef.xxx and cfg.artfctdef.yyy for each feature
+cfg = ft_checkconfig(cfg, 'renamedval', {'interplimits', 'electrodes' 'sensors'});
 
 % ensure that the preproc specific options are located in the cfg.preproc substructure
 cfg = ft_checkconfig(cfg, 'createsubcfg',  {'preproc'});
@@ -192,7 +193,7 @@ cfg.selfun              = ft_getopt(cfg, 'selfun');                    % default
 cfg.selcfg              = ft_getopt(cfg, 'selcfg');                    % defaulting done below, requires layouts/etc to be processed
 cfg.seldat              = ft_getopt(cfg, 'seldat', 'current');
 cfg.colorgroups         = ft_getopt(cfg, 'colorgroups', 'sequential');
-cfg.linecolor           = ft_getopt(cfg, 'linecolor', [0.75 0 0; 0 0 1; 0 1 0; 0.44 0.19 0.63; 0 0.13 0.38;0.5 0.5 0.5;1 0.75 0; 1 0 0; 0.89 0.42 0.04; 0.85 0.59 0.58; 0.57 0.82 0.31; 0 0.69 0.94; 1 0 0.4; 0 0.69 0.31; 0 0.44 0.75]);
+cfg.linecolor           = ft_getopt(cfg, 'linecolor', []); % the default is defined in lineattributes_common
 cfg.linestyle           = ft_getopt(cfg, 'linestyle', '-');
 cfg.linewidth           = ft_getopt(cfg, 'linewidth', 0.5);
 cfg.eegscale            = ft_getopt(cfg, 'eegscale');
@@ -225,7 +226,7 @@ cfg.contournum          = ft_getopt(cfg, 'contournum', 0);               % topop
 cfg.trl                 = ft_getopt(cfg, 'trl');
 cfg.gridscale           = ft_getopt(cfg, 'gridscale', 45);
 cfg.shading             = ft_getopt(cfg, 'shading', 'flat');
-cfg.interplimits        = ft_getopt(cfg, 'interplim', 'mask');
+cfg.interplimits        = ft_getopt(cfg, 'interplimits', 'mask');
 cfg.interpolation       = ft_getopt(cfg, 'interpmethod', 'v4');
 cfg.channelclamped      = ft_getopt(cfg, 'channelclamped');
 % set the defaults for plotting the events
@@ -305,7 +306,7 @@ end
 
 if strcmp(cfg.viewmode, 'component')
   % read or create the topographic layout that will be used for the topoplots
-  tmpcfg = keepfields(cfg, {'layout', 'rows', 'columns', 'commentpos', 'skipcomnt', 'scalepos', 'skipscale', 'projection', 'viewpoint', 'rotate', 'width', 'height', 'elec', 'grad', 'opto', 'showcallinfo', 'trackcallinfo', 'trackconfig', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo'});
+  tmpcfg = keepfields(cfg, {'layout', 'rows', 'columns', 'commentpos', 'skipcomnt', 'scalepos', 'skipscale', 'projection', 'viewpoint', 'rotate', 'width', 'height', 'elec', 'grad', 'opto', 'showcallinfo', 'trackcallinfo', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo', 'checksize'});
   if hasdata
     % select those channels from the layout that are relevant for the
     % decomposition that is being plotted
@@ -514,9 +515,9 @@ end
 
 % determine the coloring of channels
 if hasdata
-  linecolor = linecolor_common(cfg, data);
+  linecolor = lineattributes_common(cfg, data);
 else
-  linecolor = linecolor_common(cfg, hdr);
+  linecolor = lineattributes_common(cfg, hdr);
 end
 
 % collect the artifacts from cfg.artfctdef.xxx.artifact
@@ -604,6 +605,7 @@ elseif isempty(cfg.selfun) && isempty(cfg.selcfg)
   cfg.selcfg{2} = [];
   cfg.selcfg{2}.linecolor = linecolor;
   cfg.selcfg{2}.layout = cfg.layout;
+  cfg.selcfg{2}.colorgroups = 'sequential';
   cfg.selfun{2} = 'multiplotER';
   % topoplotER
   cfg.selcfg{3} = [];
@@ -840,7 +842,6 @@ end % if nargout
 
 % do the general cleanup and bookkeeping at the end of the function
 ft_postamble debug
-ft_postamble trackconfig
 ft_postamble previous data
 ft_postamble provenance
 
@@ -900,7 +901,7 @@ end % function cb_datacursortext
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SUBFUNCTION see also linecolor_common
+% SUBFUNCTION see also lineattributes_common
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function color = colorcheck(color, n)
 % define the mapping between color characters and RGB values
@@ -1194,6 +1195,14 @@ else
   else
     funcfg.figurename = sprintf('%s : trial %d/%d: segment: %d/%d , time from %g to %g s', cmenulab, opt.trllock, size(opt.trlorg,1), opt.trlop, size(opt.trlvis,1), seldata.time{1}(1), seldata.time{1}(end));
   end
+
+  if ~isempty(opt.orgdata) && isfield(funcfg, 'linecolor')
+    % the function that is executed does not know that only a subset of the channels will be passed in the input,
+    % make sure that the funcfg's linecolor is consistent with this selection
+    selchan = match_str(opt.orgdata.label, seldata.label);
+    funcfg.linecolor = opt.linecolor(selchan, :);
+  end
+
   feval(funhandle, funcfg, seldata);
 end
 
@@ -1666,7 +1675,7 @@ switch key
     fprintf('identified channel name: %s\n',label);
     redraw_cb(h, eventdata);
 
-    ft_plot_text(xpos, ypos, label, 'FontSize', cfg.fontsize, 'FontUnits', cfg.fontunits, 'tag', 'identifiedchannel', 'FontSize', cfg.fontsize, 'FontUnits', cfg.fontunits);
+    ft_plot_text(xpos, ypos, label, 'tag', 'identifiedchannel', 'FontSize', cfg.fontsize, 'FontUnits', cfg.fontunits);
     if ~ishold
       hold on
       ft_plot_vector(opt.curdata.time{1}, opt.curdata.trial{1}(datindx,:)', 'box', false, 'tag', 'identifiedchannel', 'hpos', opt.layouttime.pos(layoutindx,1), 'vpos', opt.layouttime.pos(layoutindx,2), 'width', opt.layouttime.width(layoutindx), 'height', opt.layouttime.height(layoutindx), 'hlim', opt.hlim, 'vlim', opt.vlim, 'color', 'k', 'linewidth', 2);
@@ -1771,8 +1780,6 @@ delete(findobj(h, 'tag', 'selectedrange'));
 % not removing channel labels, they cause the bulk of redrawing time for the slow text function (note, interpreter = none hardly helps), see bug 2065
 % delete(findobj(h, 'tag', 'channellabel'));
 
-
-
 % temporarily store the originally selected list of channels
 userchan    = cfg.channel;
 
@@ -1794,7 +1801,9 @@ endsample = opt.trlvis(opt.trlop, 2);
 offset    = opt.trlvis(opt.trlop, 3);
 chanindx  = match_str(opt.hdr.label, cfg.channel);
 
-if isempty(opt.orgdata)
+if isempty(chanindx)
+  dat = zeros(0, endsample-begsample+1);
+elseif isempty(opt.orgdata)
   dat = ft_read_data(cfg.datafile, 'header', opt.hdr, 'begsample', begsample, 'endsample', endsample, 'chanindx', chanindx, 'checkboundary', ~istrue(cfg.continuous), 'dataformat', cfg.dataformat, opt.headeropt{:});
 else
   dat = ft_fetch_data(opt.orgdata, 'header', opt.hdr, 'begsample', begsample, 'endsample', endsample, 'chanindx', chanindx, 'allowoverlap', cfg.allowoverlap, 'skipcheckdata', true);
@@ -1878,7 +1887,7 @@ if strcmp(cfg.viewmode, 'butterfly')
 else
   % the timecourse layout needs to be reconstructed whenever the channel selection changes
   if changedchanflg % trigger for redrawing channel labels and preparing layout again (see bug 2065 and 2878)
-    tmpcfg = keepfields(cfg, {'channel', 'columns', 'rows', 'commentpos', 'scalepos', 'elec', 'grad', 'opto', 'showcallinfo', 'trackcallinfo', 'trackconfig', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo'});
+    tmpcfg = keepfields(cfg, {'channel', 'columns', 'rows', 'commentpos', 'scalepos', 'elec', 'grad', 'opto', 'showcallinfo', 'trackcallinfo', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo', 'checksize'});
     tmpcfg.layout = 'vertical';
     tmpcfg.skipcomnt = 'yes';
     tmpcfg.skipscale = 'yes';
@@ -2036,6 +2045,8 @@ if strcmp(cfg.plotevents, 'yes')
         else
           eventlabel = '';
         end
+      case 'no'
+        eventlabel = '';
       otherwise
         ft_warning('unsupported specification of cfg.ploteventlabels');
         eventlabel = '';
@@ -2154,39 +2165,43 @@ elseif strcmp(cfg.viewmode, 'vertical') || strcmp(cfg.viewmode, 'component')
     end
   end
 
-  % plot yticks
-  if length(chanindx)>6
-    % plot yticks at each label in case adaptive labeling is used (cfg.plotlabels = 'some')
-    % otherwise, use the old ytick plotting based on hard-coded number of channels
-    if strcmp(cfg.plotlabels, 'some')
-      yTick = sort(labely(mod(chanindx,labskip)==0), 'ascend'); % sort is required, yticks should be increasing in value
-      yTickLabel = [];
-    else
-      if length(chanindx)>19
-        % no space for yticks
-        yTick = [];
+  if ~isempty(chanindx)
+    % plot yticks
+    if length(chanindx)>6
+      % plot yticks at each label in case adaptive labeling is used (cfg.plotlabels = 'some')
+      % otherwise, use the old ytick plotting based on hard-coded number of channels
+      if strcmp(cfg.plotlabels, 'some')
+        yTick = sort(labely(mod(chanindx,labskip)==0), 'ascend'); % sort is required, yticks should be increasing in value
         yTickLabel = [];
-      elseif length(chanindx)> 6
-        % one tick per channel
-        yTick = sort([
-          opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/4)
-          opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/4)
-          ]);
-        yTickLabel = {[.25 .75] .* range(opt.vlim) + opt.vlim(1)};
+      else
+        if length(chanindx)>19
+          % no space for yticks
+          yTick = [];
+          yTickLabel = [];
+        elseif length(chanindx)> 6
+          % one tick per channel
+          yTick = sort([
+            opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/4)
+            opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/4)
+            ]);
+          yTickLabel = {[.25 .75] .* range(opt.vlim) + opt.vlim(1)};
+        end
       end
+    else
+      % two ticks per channel
+      yTick = sort([
+        opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/2)
+        opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/4)
+        opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/4)
+        opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/2)
+        ]); % sort
+      yTickLabel = {[.0 .25 .75 1] .* range(opt.vlim) + opt.vlim(1)};
     end
+    yTickLabel = repmat(yTickLabel, 1, length(chanindx));
+    set(gca, 'yTick', yTick, 'yTickLabel', yTickLabel);
   else
-    % two ticks per channel
-    yTick = sort([
-      opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/2)
-      opt.layouttime.pos(:,2)+(opt.layouttime.height(laysel)/4)
-      opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/4)
-      opt.layouttime.pos(:,2)-(opt.layouttime.height(laysel)/2)
-      ]); % sort
-    yTickLabel = {[.0 .25 .75 1] .* range(opt.vlim) + opt.vlim(1)};
-  end
-  yTickLabel = repmat(yTickLabel, 1, length(chanindx));
-  set(gca, 'yTick', yTick, 'yTickLabel', yTickLabel);
+    set(gca, 'yTick', [], 'yTickLabel', []);
+  end % if not empty
 
 else
   % the following is implemented for other viewmodes
@@ -2343,7 +2358,7 @@ if strcmp(cfg.viewmode, 'component')
       % drawnow
     end % for chanindx
 
-    caxis([0 1]);
+    clim([0 1]);
 
   end % if redraw_topo
 

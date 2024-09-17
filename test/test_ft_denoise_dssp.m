@@ -1,8 +1,9 @@
 function test_ft_denoise_dssp
 
-% MEM 3gb
+% MEM 1gb
 % WALLTIME 00:10:00
 % DEPENDENCY ft_denoise_dssp
+% DATA private
 
 % below is based on simulated data using Kensuke's code, and should behave as the
 % bdssp_main script that he uses to demonstrate the algorithm
@@ -14,6 +15,7 @@ cfg.sourcemodel = tmp.grid;
 cfg.dssp.n_space = 30;
 cfg.dssp.n_in    = 30;
 cfg.dssp.n_out   = 30;
+cfg.dssp.n_intersect = 2;
 dataout = ft_denoise_dssp(cfg, data);
 
 % the lowsnr data, has multiple trials, in which the 'blip' of activity has

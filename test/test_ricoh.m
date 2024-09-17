@@ -1,8 +1,9 @@
 function test_ricoh
 
-% MEM 6gb
+% MEM 4gb
 % WALLTIME 01:00:00
 % DEPENDENCY hasricoh isricohmegfile read_ricoh_data read_ricoh_event read_ricoh_header ricoh2grad
+% DATA private
 
 %% Test function for Ricoh *.con (Third-party exported) data
 %
@@ -52,7 +53,7 @@ cfg.trialdef.poststim   = 0.5; %sec
 cfg = ft_definetrial(cfg);
 trl = cfg.trl;
 
-if length(trl(:,1))~=100
+if size(trl,1)~=100
   error('could not define trials appropriately');
 end
 

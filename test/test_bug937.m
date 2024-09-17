@@ -1,8 +1,9 @@
 function test_bug937
 
-% MEM 2gb
+% MEM 1gb
 % WALLTIME 00:10:00
 % DEPENDENCY ft_prepare_mesh ft_headmodeltype ft_plot_mesh
+% DATA private
 
 
 csvol.o = [0,0,0];
@@ -40,7 +41,7 @@ assert(ft_headmodeltype(svolcs,'concentricspheres'))
 %   zgrid = xgrid;
 %   [X, Y, Z]  = ndgrid(xgrid, ygrid, zgrid);
 %   pos = [X(:) Y(:) Z(:)];
-%   [inside] = bounding_mesh(pos, svol(i).bnd.pnt, svol(i).bnd.tri);
+%   [inside] = surface_inside(pos, svol(i).bnd.pnt, svol(i).bnd.tri);
 %   l = length(xgrid)
 %   c = 76; sel = (l-1)./2; % in voxel
 %   tmp = reshape(inside,[l l l]);

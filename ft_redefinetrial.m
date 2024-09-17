@@ -21,16 +21,28 @@ function [data] = ft_redefinetrial(cfg, data)
 % For realiging the time axes of all trials to a new reference time
 % point (i.e. change the definition for t=0) you can use the following
 % configuration option
-%   cfg.offset    = single number or Nx1 vector, expressed in samples relative to current t=0
+%   cfg.offset    = single number or Nx1 vector, by how many samples should the 
+%                   time axes be shifted. i.e. if you want t=1 to be the new t=0,
+%                   set cfg.offset = -1*Fs (Fs is the sampling frequency in Hz).
+%                   If cfg.trials is defined, N must be equal to the original
+%                   number of trials or to the number of selected trials.
 %
-% For selecting a specific subsection of (i.e. cut out a time window
-% of interest) you can select a time window in seconds that is common
-% in all trials
-%   cfg.toilim    = [tmin tmax] to specify a latency window in seconds, can be Nx2 vector
+% For selecting a specific subsection within trials (i.e. cut out a time window
+% of interest) you can use the following configuration option
+%   cfg.toilim    = [tmin tmax], latency window in seconds, can be
+%                   Nx2 vector. If cfg.trials is defined, N must be equal
+%                   to the original number of trials or to the number of 
+%                   selected trials.
 %
 % Alternatively you can specify the begin and end sample in each trial
-%   cfg.begsample = single number or Nx1 vector, expressed in samples relative to the start of the input trial
-%   cfg.endsample = single number or Nx1 vector, expressed in samples relative to the start of the input trial
+%   cfg.begsample = single number or Nx1 vector, expressed in samples relative
+%                   to the start of the input trial. If cfg.trials is defined, 
+%                   N must be equal to the original number of trials or to the
+%                   number of selected trials.
+%   cfg.endsample = single number or Nx1 vector, expressed in samples relative
+%                   to the start of the input trial. If cfg.trials is defined, 
+%                   N must be equal to the original number of trials or to the
+%                   number of selected trials.
 %
 % Alternatively you can specify a new trial definition, expressed in
 % samples relative to the original recording
@@ -91,7 +103,6 @@ ft_preamble init
 ft_preamble debug
 ft_preamble loadvar data
 ft_preamble provenance data
-ft_preamble trackconfig
 
 % the ft_abort variable is set to true or false in ft_preamble_init
 if ft_abort
@@ -133,21 +144,26 @@ if ~strcmp(cfg.trials, 'all')
     ft_info('selecting %d trials\n', length(cfg.trials));
   end
   
+  % If the user made a selection of trials but gave method parameters for 
+  % all original trials, keep only the selection of the parameters
+  if length(cfg.offset)>1 && length(cfg.offset)==length(data.trial)
+    cfg.offset = cfg.offset(cfg.trials);
+  end
+  if length(cfg.begsample)>1 && length(cfg.begsample)==length(data.trial)
+    cfg.begsample = cfg.begsample(cfg.trials);
+  end
+  if length(cfg.endsample)>1 && length(cfg.endsample)==length(data.trial)
+    cfg.endsample = cfg.endsample(cfg.trials);
+  end
+  if size(cfg.toilim, 1)>1 && size(cfg.toilim, 1)==length(data.trial)
+    cfg.toilim = cfg.toilim(cfg.trials, :);
+  end
+  
   % select trials of interest
-  tmpcfg = keepfields(cfg, {'trials', 'showcallinfo', 'trackcallinfo', 'trackconfig', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo'});
+  tmpcfg = keepfields(cfg, {'trials', 'showcallinfo', 'trackcallinfo', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo', 'checksize'});
   data   = ft_selectdata(tmpcfg, data);
   % restore the provenance information
   [cfg, data] = rollback_provenance(cfg, data);
-  
-  if length(cfg.offset)>1 && length(cfg.offset)~=length(cfg.trials)
-    cfg.offset = cfg.offset(cfg.trials);
-  end
-  if length(cfg.begsample)>1 && length(cfg.begsample)~=length(cfg.trials)
-    cfg.begsample = cfg.begsample(cfg.trials);
-  end
-  if length(cfg.endsample)>1 && length(cfg.endsample)~=length(cfg.trials)
-    cfg.endsample = cfg.endsample(cfg.trials);
-  end
 end
 
 Ntrial = numel(data.trial);
@@ -159,6 +175,20 @@ if numoptions>1
 end
 if numoptions==0 && isempty(cfg.minlength) && strcmp(cfg.trials, 'all')
   ft_error('you should specify at least one configuration option');
+end
+
+% check that the number of chosen trials matches the number of method parameters provided
+if length(cfg.offset)>1 && length(cfg.offset)~=Ntrial
+  ft_error('inconsistent number of trials and offsets');
+end
+if length(cfg.begsample)>1 && length(cfg.begsample)~=Ntrial
+  ft_error('inconsistent number of trials and begsamples');
+end
+if length(cfg.endsample)>1 && length(cfg.endsample)~=Ntrial
+  ft_error('inconsistent number of trials and begsamples');
+end
+if size(cfg.toilim, 1)>1 && size(cfg.toilim, 1)~=Ntrial
+  ft_error('inconsistent number of trials and toilims');
 end
 
 % start processing
@@ -317,7 +347,11 @@ elseif ~isempty(cfg.length)
   % create dummy trl-matrix and recursively call ft_redefinetrial
   nsmp    = round(cfg.length*data.fsample);
   nshift  = round((1-cfg.overlap)*nsmp);
-  
+
+  if nshift<=0
+    ft_error('the overlap is too large');
+  end
+ 
   newtrl = zeros(0,4);
   for k = 1:numel(data.trial)
     begsample = data.sampleinfo(k,1);
@@ -333,7 +367,7 @@ elseif ~isempty(cfg.length)
   end
   clear begsample endsample offset
   
-  tmpcfg = keepfields(cfg, {'feedback', 'showcallinfo', 'trackcallinfo', 'trackconfig', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo'});
+  tmpcfg = keepfields(cfg, {'feedback', 'showcallinfo', 'trackcallinfo', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo', 'checksize'});
   tmpcfg.trl = newtrl;
   
   if isfield(data, 'trialinfo') && ~istable(data.trialinfo)
@@ -371,7 +405,7 @@ elseif istrue(cfg.continuous)
   % here we want to use the start of the recording as t=0
   newtrl(:,3) = newtrl(:,1) - 1;
   
-  tmpcfg = keepfields(cfg, {'feedback', 'showcallinfo', 'trackcallinfo', 'trackconfig', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo'});
+  tmpcfg = keepfields(cfg, {'feedback', 'showcallinfo', 'trackcallinfo', 'trackusage', 'trackdatainfo', 'trackmeminfo', 'tracktimeinfo', 'checksize'});
   tmpcfg.trl = newtrl;
   
   data   = removefields(data, {'trialinfo'}); % the trialinfo does not apply any more
@@ -419,7 +453,6 @@ end
 
 % do the general cleanup and bookkeeping at the end of the function
 ft_postamble debug
-ft_postamble trackconfig
 ft_postamble previous   data
 ft_postamble provenance data
 ft_postamble history    data

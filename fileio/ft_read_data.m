@@ -23,7 +23,7 @@ function [dat] = ft_read_data(filename, varargin)
 %   'fallback'       can be empty or 'biosig' (default = [])
 %   'blocking'       wait for the selected number of events (default = 'no')
 %   'timeout'        amount of time in seconds to wait when blocking (default = 5)
-%   'password'       password structure for encrypted data set (only for mayo_mef30 and mayo_mef21)
+%   'password'       password structure for encrypted data set (only for dhn_med10, mayo_mef30 and mayo_mef21)
 %
 % This function returns a 2-D matrix of size Nchans*Nsamples for continuous
 % data when begevent and endevent are specified, or a 3-D matrix of size
@@ -475,10 +475,10 @@ switch dataformat
       'duration', [(begsample-1)*hdr.orig.skipfactor+1, endsample*hdr.orig.skipfactor],...
       'skipfactor', hdr.orig.skipfactor);
     
-    d_min=[orig.ElectrodesInfo.MinDigiValue];
-    d_max=[orig.ElectrodesInfo.MaxDigiValue];
-    v_min=[orig.ElectrodesInfo.MinAnalogValue];
-    v_max=[orig.ElectrodesInfo.MaxAnalogValue];
+    d_min=double([orig.ElectrodesInfo.MinDigiValue]);
+    d_max=double([orig.ElectrodesInfo.MaxDigiValue]);
+    v_min=double([orig.ElectrodesInfo.MinAnalogValue]);
+    v_max=double([orig.ElectrodesInfo.MaxAnalogValue]);
     
     %calculating slope (a) and ordinate (b) of the calibration
     b=double(v_min .* d_max - v_max .* d_min) ./ double(d_max - d_min);
@@ -569,6 +569,10 @@ switch dataformat
   case 'dataq_wdq'
     dat = read_wdq_data(filename, hdr.orig, begsample, endsample, chanindx);
     
+  case 'dhn_med10'
+    hdr.sampleunit = 'index';
+    dat = read_dhn_med10(filename, password, false, hdr, begsample, endsample, chanindx);
+
   case 'eeglab_set'
     dat = read_eeglabdata(filename, 'header', hdr, 'begtrial', begtrial, 'endtrial', endtrial, 'chanindx', chanindx);
     dimord = 'chans_samples_trials';
@@ -1021,7 +1025,7 @@ switch dataformat
     
   case 'mayo_mef30'
     hdr.sampleunit = 'index';
-    dat = read_mayo_mef30(filename, password, sortchannel, hdr, begsample, endsample, chanindx);
+    dat = read_mayo_mef30(filename, password, [], hdr, begsample, endsample, chanindx);
     
   case 'mayo_mef21'
     hdr.sampleunit = 'index';
@@ -1088,6 +1092,7 @@ switch dataformat
       warning(['Some channels ignored due to different sampling rates: ' excludedChannelLabels]);
     end
     dimord = 'samples_chans';
+    dat = dat(begsample:endsample, chanindx);
     
   case 'neuroscope_bin'
     switch hdr.orig.nBits
@@ -1250,12 +1255,28 @@ switch dataformat
       dat = fiff_read_raw_segment(hdr.orig.raw,begsample+hdr.orig.raw.first_samp-1,endsample+hdr.orig.raw.first_samp-1,chanindx);
       dimord = 'chans_samples';
     elseif (hdr.orig.isepoched)
-      data = permute(hdr.orig.epochs.data, [2 3 1]);  % Chan X Sample X Trials
-      if requesttrials
-        dat = data(chanindx, :, begtrial:endtrial);
-      else
-        dat = data(chanindx, begsample:endsample);  % reading over boundaries
+      % permutation of the data matrix is time consuming, and offsets the time gained by not 
+      % re-reading the data. Permutation is only needed for efficient matrix indexing, but 
+      % makes sense only if data are read across boundaries
+      if ~requesttrials
+        if mod(begsample, hdr.nSamples)==1 && mod(endsample, hdr.nSamples==0)
+          requesttrials = true;
+          begtrial = floor(begsample/hdr.nSamples)+1;
+          endtrial = endsample/hdr.nSamples;
+        end
       end
+
+      if requesttrials
+        if endtrial>begtrial
+          dat = hdr.orig.epochs.data(chanindx, :, begtrial:endtrial);
+          dat = reshape(dat, size(dat,1), []);
+        else
+          dat = hdr.orig.epochs.data(chanindx, :, begtrial);
+        end
+      else
+        dat = dat(chanindx, begsample:endsample);  % reading over boundaries
+      end
+
     elseif (hdr.orig.isaverage)
       assert(isfield(hdr.orig, 'evoked'), '%s does not contain evoked data', filename);
       dat = cat(2, hdr.orig.evoked.epochs);            % concatenate all epochs, this works both when they are of constant or variable length
@@ -1301,6 +1322,7 @@ switch dataformat
     for i=1:hdr.nChans
       v=double(hdr.orig.orig.(hdr.label{i}));
       v=v*hdr.orig.orig.(char(strcat(hdr.label{i},'_BitResolution')));
+      v=v/hdr.orig.orig.(char(strcat(hdr.label{i},'_Gain')));
       dat(i,:)=v(begsample:endsample); %channels sometimes have small differences in samples
     end
     
@@ -1582,10 +1604,11 @@ switch dataformat
     blocksize = hdr.orig.header.SamplePeriodsPerBlock;
     begtrial = floor((begsample-1)/blocksize) + 1;
     endtrial = floor((endsample-1)/blocksize) + 1;
-    dat = read_tmsi_poly5(filename, hdr.orig, begtrial, endtrial);
+    dat = read_tmsi_poly5(filename, hdr.orig, begtrial, endtrial, chanindx);
     offset = (begtrial-1)*blocksize;
     % select the desired samples and channels
-    dat = dat(chanindx, (begsample-offset):(endsample-offset));
+    %dat = dat(chanindx, (begsample-offset):(endsample-offset));
+    dat = dat(:, (begsample-offset):(endsample-offset));
     
   case 'videomeg_aud'
     dat = read_videomeg_aud(filename, hdr, begsample, endsample);

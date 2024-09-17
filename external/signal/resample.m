@@ -119,7 +119,7 @@ Ly = ceil(Lx*p/q);
 % pre and postpad filter response
 
 nz_pre = floor(q-mod(L,q));
-hpad = [zeros(nz_pre,1);h];
+hpad = [zeros(nz_pre,1);h(:)];
 
 offset = floor((L+nz_pre)/q);
 nz_post = 0;
@@ -129,8 +129,13 @@ end
 hpad = [hpad; zeros(nz_post,1)];
 
 % filtering
-xfilt = upfirdn(x,hpad,p,q);
-y = xfilt(offset+1:offset+Ly,:);
+if p==1 && q==1
+  % no resampling needed.
+  y = x;
+else
+  xfilt = upfirdn(x,hpad,p,q);
+  y = xfilt(offset+1:offset+Ly,:);
+end
 
 if isrowvector
   y=y.';

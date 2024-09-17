@@ -128,6 +128,7 @@ url = {
   'GIFTI'                                 'see http://www.artefact.tk/software/matlab/gifti'
   'GTEC'                                  'see http://www.gtec.at'
   'HOMER3'                                'see https://github.com/BUNPC/Homer3 and https://github.com/fNIRS/snirf_homer3'
+  'HEDTOOLS'                              'see https://hed-examples.readthedocs.io/en/latest/HedMatlabTools.html'
   'IBTB'                                  'see Magri et al. BMC Neurosci 2009, 10:81'
   'ICASSO'                                'see http://www.cis.hut.fi/projects/ica/icasso'
   'IMAGES'                                'see http://www.mathworks.com/products/image'  % Mathworks refers to this as IMAGES
@@ -142,7 +143,7 @@ url = {
   'MATLAB2BESA'                           'see http://www.besa.de/downloads/matlab/ and get the "MATLAB to BESA Export functions"'
   'MATNWB'                                'see https://neurodatawithoutborders.github.io/matnwb/'
   'MATPLOTLIB'                            'see https://nl.mathworks.com/matlabcentral/fileexchange/62729-matplotlib-perceptually-uniform-colormaps'
-  'MAYO_MEF'                              'see https://github.com/MultimodalNeuroimagingLab/mef_reader_fieldtrip and https://msel.mayo.edu/codes.html'
+  'MAYO_MEF'                              'see https://github.com/jiecui/mef_reader_fieldtrip and https://msel.mayo.edu/codes.html'
   'MEG-CALC'                              'this is a commercial toolbox from Neuromag, see http://www.neuromag.com'
   'MEG-PD'                                'see http://www.kolumbus.fi/kuutela/programs/meg-pd'
   'MENTAT'                                'see http://robertoostenveld.nl, or contact Robert Oostenveld'
@@ -162,6 +163,7 @@ url = {
   'NPMK'                                  'see https://github.com/BlackrockMicrosystems/NPMK'
   'NWAY'                                  'see http://www.models.kvl.dk/source/nwaytoolbox'
   'OPENMEEG'                              'see http://openmeeg.github.io and http://www.fieldtriptoolbox.org/faq/how_do_i_install_the_openmeeg_binaries'
+  'OPM'                                   'see https://github.com/tierneytim/OPM'
   'OPTIM'                                 'see http://www.mathworks.com/products/optim'
   'PEER'                                  'see http://www.fieldtriptoolbox.org'
   'PEER'                                  'see http://www.fieldtriptoolbox.org/development/peer'
@@ -171,13 +173,16 @@ url = {
   'PLOTTING'                              'see http://www.fieldtriptoolbox.org'
   'PREPROC'                               'see http://www.fieldtriptoolbox.org'
   'PRTOOLS'                               'see http://www.prtools.org'
+  'READ_MED'                              'see https://www.darkhorseneuro.com'
   'REALTIME'                              'see http://www.fieldtriptoolbox.org'
   'RICOH_MEG_READER'                      'contact Ricoh engineers'
   'SIGNAL'                                'see http://www.mathworks.com/products/signal'
   'SIMBIO'                                'see https://www.mrt.uni-jena.de/simbio/index.php/Main_Page'
+  'SIMNIBS'                               'see http://www.simnibs.org/'
   'SON2'                                  'see http://www.kcl.ac.uk/depsta/biomedical/cfnr/lidierth.html, or contact Malcolm Lidierth'
   'SPECEST'                               'see http://www.fieldtriptoolbox.org'
   'SPIKE'                                 'see http://www.fieldtriptoolbox.org'
+  'SPIKEGLX'                              'see https://github.com/jenniferColonell/SpikeGLX_Datafile_Tools'
   'SPLINES'                               'see http://www.mathworks.com/products/splines'
   'SPM'                                   'see http://www.fil.ion.ucl.ac.uk/spm'
   'SPM12'                                 'see http://www.fil.ion.ucl.ac.uk/spm'
@@ -208,9 +213,9 @@ fallback_toolbox='';
 
 switch toolbox
   case 'AFNI'
-    dependency= {'BrikLoad', 'BrikInfo'};
+    dependency = {'BrikLoad', 'BrikInfo'};
   case 'DSS'
-    dependency= {'denss', 'dss_create_state'};
+    dependency = {'denss', 'dss_create_state'};
   case 'EEGLAB'
     dependency = 'runica';
   case 'NWAY'
@@ -339,6 +344,8 @@ switch toolbox
     dependency = 'elecsfwd';
   case 'SIMBIO'
     dependency = {'calc_stiff_matrix_val', 'sb_transfer'};
+  case 'SIMNIBS'
+    dependency = {'mesh_load_gmsh4', 'mesh_save_gmsh4', 'standard_cond', 'mesh_empty'};
   case 'VGRID'
     dependency = 'vgrid';
   case 'GIFTI'
@@ -427,8 +434,8 @@ switch toolbox
     dependency = {'copnorm' 'mi_gg'};
   case 'XSENS'
     dependency = {'load_mvnx'};
-  case 'MAYO_MEF' % MEF 2.1 and MEF 3.0
-    dependency = {'MEFFieldTrip_2p1', 'MEFFieldTrip_3p0'};
+  case 'MAYO_MEF' % MED 1.0, MEF 2.1 and MEF 3.0
+    dependency = {'MEDFieldTrip_1p0', 'MEFFieldTrip_2p1', 'MEFFieldTrip_3p0'};
   case 'MATNWB'
     dependency = {'nwbRead', 'generateCore'};
   case 'MATPLOTLIB'
@@ -441,8 +448,16 @@ switch toolbox
     dependency = is_subdir_in_fieldtrip_path('/external/fileexchange');
   case 'HOMER3'
     dependency = {'SnirfClass' 'DataClass' 'AuxClass' 'MeasListClass' 'MetaDataTagsClass' 'ProbeClass' 'StimClass'};
+  case 'HEDTOOLS'
+    dependency = {'hed_assemble' 'getSessionInfo' 'getHostOptions'};
   case 'DUNEURO'
     dependency = {'duneuro_meeg', 'duneuro_function', 'compute_B_primary'};
+  case 'OPM'
+    dependency = {'spm_opm_vslm'};
+  case 'READ_MED'
+    dependency = {'read_MED', 'plot_MED'};
+  case 'SKIPEGLX'
+    dependency = {'SGLX_readMeta'};    
 
     % the following are FieldTrip modules or toolboxes
   case 'FILEIO'
@@ -537,9 +552,9 @@ if ~status && autoadd>0
     % the toolbox is not on the path and cannot be added
     sel = find(strcmp(url(:,1), toolbox));
     if ~isempty(sel)
-      msg = sprintf('the %s toolbox is not installed, %s', toolbox, url{sel, 2});
+      msg = sprintf('the %s toolbox is not available, %s', toolbox, url{sel, 2});
     else
-      msg = sprintf('the %s toolbox is not installed', toolbox);
+      msg = sprintf('the %s toolbox is not available', toolbox);
     end
     if autoadd==1
       error(msg);
@@ -554,9 +569,9 @@ elseif ~status && autoadd<0
   % the toolbox is not on the path and should not be added
   sel = find(strcmp(url(:,1), toolbox));
   if ~isempty(sel)
-    msg = sprintf('the %s toolbox is not installed, %s', toolbox, url{sel, 2});
+    msg = sprintf('the %s toolbox is not available, %s', toolbox, url{sel, 2});
   else
-    msg = sprintf('the %s toolbox is not installed', toolbox);
+    msg = sprintf('the %s toolbox is not available', toolbox);
   end
   error(msg);
 end
@@ -643,7 +658,7 @@ path = strrep(path,'\','/');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function status = hasfunction(funname, toolbox)
 try
-  % call the function without any input arguments, which probably is inapropriate
+  % call the function without any input arguments, which probably is inappropriate
   feval(funname);
   % it might be that the function without any input already works fine
   status = true;

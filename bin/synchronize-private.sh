@@ -102,18 +102,6 @@ ARRAY+=(external/dss/private/boolvec2artifact.m)
 sync ${ARRAY[*]}
 
 ################################################################################
-# bounding_mesh.m
-
-ARRAY=()
-ARRAY+=(external/dipoli/private/bounding_mesh.m)
-ARRAY+=(external/openmeeg/private/bounding_mesh.m)
-ARRAY+=(fileio/private/bounding_mesh.m)
-ARRAY+=(forward/private/bounding_mesh.m)
-ARRAY+=(inverse/private/bounding_mesh.m)
-ARRAY+=(private/bounding_mesh.m)
-sync ${ARRAY[*]}
-
-################################################################################
 # buffer.mexa64
 
 ARRAY=()
@@ -135,6 +123,14 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(fileio/private/buffer.mexmac)
 ARRAY+=(realtime/src/buffer/matlab/buffer.mexmac)
+sync ${ARRAY[*]}
+
+################################################################################
+# buffer.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/buffer.mexmaca64)
+ARRAY+=(realtime/src/buffer/matlab/buffer.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -235,8 +231,6 @@ sync ${ARRAY[*]}
 # compiler.h
 
 ARRAY=()
-ARRAY+=(engine/private/compiler.h)
-ARRAY+=(peer/src/compiler.h)
 ARRAY+=(src/compiler.h)
 sync ${ARRAY[*]}
 
@@ -315,6 +309,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.m)
+ARRAY+=(private/det2x2.m)
 ARRAY+=(src/det2x2.m)
 sync ${ARRAY[*]}
 
@@ -323,6 +318,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.mexa64)
+ARRAY+=(private/det2x2.mexa64)
 ARRAY+=(src/det2x2.mexa64)
 sync ${ARRAY[*]}
 
@@ -331,6 +327,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.mexglx)
+ARRAY+=(private/det2x2.mexglx)
 ARRAY+=(src/det2x2.mexglx)
 sync ${ARRAY[*]}
 
@@ -339,6 +336,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.mexmaci)
+ARRAY+=(private/det2x2.mexmaci)
 ARRAY+=(src/det2x2.mexmaci)
 sync ${ARRAY[*]}
 
@@ -356,6 +354,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.mexw32)
+ARRAY+=(private/det2x2.mexw32)
 ARRAY+=(src/det2x2.mexw32)
 sync ${ARRAY[*]}
 
@@ -364,6 +363,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det2x2.mexw64)
+ARRAY+=(private/det2x2.mexw64)
 ARRAY+=(src/det2x2.mexw64)
 sync ${ARRAY[*]}
 
@@ -372,6 +372,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.m)
+ARRAY+=(private/det3x3.m)
 ARRAY+=(src/det3x3.m)
 sync ${ARRAY[*]}
 
@@ -380,6 +381,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.mexa64)
+ARRAY+=(private/det3x3.mexa64)
 ARRAY+=(src/det3x3.mexa64)
 sync ${ARRAY[*]}
 
@@ -388,6 +390,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.mexglx)
+ARRAY+=(private/det3x3.mexglx)
 ARRAY+=(src/det3x3.mexglx)
 sync ${ARRAY[*]}
 
@@ -396,6 +399,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.mexmaci)
+ARRAY+=(private/det3x3.mexmaci)
 ARRAY+=(src/det3x3.mexmaci)
 sync ${ARRAY[*]}
 
@@ -413,6 +417,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.mexw32)
+ARRAY+=(private/det3x3.mexw32)
 ARRAY+=(src/det3x3.mexw32)
 sync ${ARRAY[*]}
 
@@ -421,6 +426,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/det3x3.mexw64)
+ARRAY+=(private/det3x3.mexw64)
 ARRAY+=(src/det3x3.mexw64)
 sync ${ARRAY[*]}
 
@@ -481,8 +487,6 @@ sync ${ARRAY[*]}
 # fexec.m
 
 ARRAY=()
-ARRAY+=(engine/private/fexec.m)
-ARRAY+=(peer/private/fexec.m)
 ARRAY+=(qsub/private/fexec.m)
 sync ${ARRAY[*]}
 
@@ -590,7 +594,7 @@ ARRAY=()
 ARRAY+=(fileio/private/fixcoordsys.m)
 ARRAY+=(forward/private/fixcoordsys.m)
 ARRAY+=(plotting/private/fixcoordsys.m)
-ARRAY+=(utilities/fixcoordsys.m)
+ARRAY+=(utilities/private/fixcoordsys.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -636,7 +640,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/fixname.m)
-ARRAY+=(engine/private/fixname.m)
 ARRAY+=(fileio/private/fixname.m)
 ARRAY+=(forward/private/fixname.m)
 ARRAY+=(inverse/private/fixname.m)
@@ -869,7 +872,6 @@ sync ${ARRAY[*]}
 # ft_getopt.c
 
 ARRAY=()
-ARRAY+=(peer/src/ft_getopt.c)
 ARRAY+=(src/ft_getopt.c)
 sync ${ARRAY[*]}
 
@@ -878,11 +880,9 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/ft_getopt.m)
-ARRAY+=(engine/private/ft_getopt.m)
 ARRAY+=(fileio/private/ft_getopt.m)
 ARRAY+=(forward/private/ft_getopt.m)
 ARRAY+=(inverse/private/ft_getopt.m)
-ARRAY+=(peer/private/ft_getopt.m)
 ARRAY+=(plotting/private/ft_getopt.m)
 ARRAY+=(qsub/private/ft_getopt.m)
 ARRAY+=(specest/private/ft_getopt.m)
@@ -894,11 +894,9 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/ft_getopt.mexa64)
-ARRAY+=(engine/private/ft_getopt.mexa64)
 ARRAY+=(fileio/private/ft_getopt.mexa64)
 ARRAY+=(forward/private/ft_getopt.mexa64)
 ARRAY+=(inverse/private/ft_getopt.mexa64)
-ARRAY+=(peer/private/ft_getopt.mexa64)
 ARRAY+=(plotting/private/ft_getopt.mexa64)
 ARRAY+=(qsub/private/ft_getopt.mexa64)
 ARRAY+=(specest/private/ft_getopt.mexa64)
@@ -914,7 +912,6 @@ ARRAY+=(connectivity/private/ft_getopt.mexglx)
 ARRAY+=(fileio/private/ft_getopt.mexglx)
 ARRAY+=(forward/private/ft_getopt.mexglx)
 ARRAY+=(inverse/private/ft_getopt.mexglx)
-ARRAY+=(peer/private/ft_getopt.mexglx)
 ARRAY+=(plotting/private/ft_getopt.mexglx)
 ARRAY+=(qsub/private/ft_getopt.mexglx)
 ARRAY+=(specest/private/ft_getopt.mexglx)
@@ -930,7 +927,6 @@ ARRAY+=(connectivity/private/ft_getopt.mexmaci)
 ARRAY+=(fileio/private/ft_getopt.mexmaci)
 ARRAY+=(forward/private/ft_getopt.mexmaci)
 ARRAY+=(inverse/private/ft_getopt.mexmaci)
-ARRAY+=(peer/private/ft_getopt.mexmaci)
 ARRAY+=(plotting/private/ft_getopt.mexmaci)
 ARRAY+=(qsub/private/ft_getopt.mexmaci)
 ARRAY+=(specest/private/ft_getopt.mexmaci)
@@ -943,11 +939,9 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/ft_getopt.mexmaci64)
-ARRAY+=(engine/private/ft_getopt.mexmaci64)
 ARRAY+=(fileio/private/ft_getopt.mexmaci64)
 ARRAY+=(forward/private/ft_getopt.mexmaci64)
 ARRAY+=(inverse/private/ft_getopt.mexmaci64)
-ARRAY+=(peer/private/ft_getopt.mexmaci64)
 ARRAY+=(plotting/private/ft_getopt.mexmaci64)
 ARRAY+=(qsub/private/ft_getopt.mexmaci64)
 ARRAY+=(specest/private/ft_getopt.mexmaci64)
@@ -963,8 +957,8 @@ ARRAY+=(connectivity/private/ft_getopt.mexw32)
 ARRAY+=(fileio/private/ft_getopt.mexw32)
 ARRAY+=(forward/private/ft_getopt.mexw32)
 ARRAY+=(inverse/private/ft_getopt.mexw32)
-ARRAY+=(peer/private/ft_getopt.mexw32)
 ARRAY+=(plotting/private/ft_getopt.mexw32)
+ARRAY+=(qsub/private/ft_getopt.mexw32)
 ARRAY+=(specest/private/ft_getopt.mexw32)
 ARRAY+=(src/ft_getopt.mexw32)
 ARRAY+=(utilities/ft_getopt.mexw32)
@@ -975,12 +969,11 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/ft_getopt.mexw64)
-ARRAY+=(engine/private/ft_getopt.mexw64)
 ARRAY+=(fileio/private/ft_getopt.mexw64)
 ARRAY+=(forward/private/ft_getopt.mexw64)
 ARRAY+=(inverse/private/ft_getopt.mexw64)
-ARRAY+=(peer/private/ft_getopt.mexw64)
 ARRAY+=(plotting/private/ft_getopt.mexw64)
+ARRAY+=(qsub/private/ft_getopt.mexw64)
 ARRAY+=(specest/private/ft_getopt.mexw64)
 ARRAY+=(src/ft_getopt.mexw64)
 ARRAY+=(utilities/ft_getopt.mexw64)
@@ -1033,7 +1026,7 @@ ARRAY+=(inverse/private/ft_inv.m)
 sync ${ARRAY[*]}
 
 ################################################################################
-# ft_notification.m, should be consistent with ft_warning
+# ft_notification.m, should be consistent with ft_warning etc
 
 ARRAY=()
 ARRAY+=(connectivity/private/ft_notification.m)
@@ -1046,17 +1039,70 @@ ARRAY+=(specest/private/ft_notification.m)
 ARRAY+=(utilities/private/ft_notification.m)
 sync ${ARRAY[*]}
 
+ARRAY=()
+ARRAY+=(connectivity/private/ft_warning.m)
+ARRAY+=(fileio/private/ft_warning.m)
+ARRAY+=(forward/private/ft_warning.m)
+ARRAY+=(inverse/private/ft_warning.m)
+ARRAY+=(plotting/private/ft_warning.m)
+ARRAY+=(preproc/private/ft_warning.m)
+ARRAY+=(specest/private/ft_warning.m)
+ARRAY+=(utilities/ft_warning.m)
+sync ${ARRAY[*]}
+
+ARRAY=()
+ARRAY+=(connectivity/private/ft_error.m)
+ARRAY+=(fileio/private/ft_error.m)
+ARRAY+=(forward/private/ft_error.m)
+ARRAY+=(inverse/private/ft_error.m)
+ARRAY+=(plotting/private/ft_error.m)
+ARRAY+=(preproc/private/ft_error.m)
+ARRAY+=(specest/private/ft_error.m)
+ARRAY+=(utilities/ft_error.m)
+sync ${ARRAY[*]}
+
+ARRAY=()
+ARRAY+=(connectivity/private/ft_notice.m)
+ARRAY+=(fileio/private/ft_notice.m)
+ARRAY+=(forward/private/ft_notice.m)
+ARRAY+=(inverse/private/ft_notice.m)
+ARRAY+=(plotting/private/ft_notice.m)
+ARRAY+=(preproc/private/ft_notice.m)
+ARRAY+=(specest/private/ft_notice.m)
+ARRAY+=(utilities/ft_notice.m)
+sync ${ARRAY[*]}
+
+ARRAY=()
+ARRAY+=(connectivity/private/ft_info.m)
+ARRAY+=(fileio/private/ft_info.m)
+ARRAY+=(forward/private/ft_info.m)
+ARRAY+=(inverse/private/ft_info.m)
+ARRAY+=(plotting/private/ft_info.m)
+ARRAY+=(preproc/private/ft_info.m)
+ARRAY+=(specest/private/ft_info.m)
+ARRAY+=(utilities/ft_info.m)
+sync ${ARRAY[*]}
+
+ARRAY=()
+ARRAY+=(connectivity/private/ft_debug.m)
+ARRAY+=(fileio/private/ft_debug.m)
+ARRAY+=(forward/private/ft_debug.m)
+ARRAY+=(inverse/private/ft_debug.m)
+ARRAY+=(plotting/private/ft_debug.m)
+ARRAY+=(preproc/private/ft_debug.m)
+ARRAY+=(specest/private/ft_debug.m)
+ARRAY+=(utilities/ft_debug.m)
+sync ${ARRAY[*]}
+
 ################################################################################
 # ft_platform_supports.m
 
 ARRAY=()
 ARRAY+=(utilities/ft_platform_supports.m)
 ARRAY+=(connectivity/private/ft_platform_supports.m)
-ARRAY+=(engine/private/ft_platform_supports.m)
 ARRAY+=(fileio/private/ft_platform_supports.m)
 ARRAY+=(forward/private/ft_platform_supports.m)
 ARRAY+=(inverse/private/ft_platform_supports.m)
-ARRAY+=(peer/private/ft_platform_supports.m)
 ARRAY+=(plotting/private/ft_platform_supports.m)
 ARRAY+=(preproc/private/ft_platform_supports.m)
 ARRAY+=(qsub/private/ft_platform_supports.m)
@@ -1130,17 +1176,17 @@ ARRAY+=(utilities/ft_setopt.m)
 sync ${ARRAY[*]}
 
 ################################################################################
-# ft_warning.m, should be consistent with ft_notification.m
+# ft_version.m
 
 ARRAY=()
-ARRAY+=(connectivity/private/ft_warning.m)
-ARRAY+=(fileio/private/ft_warning.m)
-ARRAY+=(forward/private/ft_warning.m)
-ARRAY+=(inverse/private/ft_warning.m)
-ARRAY+=(plotting/private/ft_warning.m)
-ARRAY+=(preproc/private/ft_warning.m)
-ARRAY+=(specest/private/ft_warning.m)
-ARRAY+=(utilities/ft_warning.m)
+ARRAY+=(connectivity/private/ft_version.m)
+ARRAY+=(fileio/private/ft_version.m)
+ARRAY+=(forward/private/ft_version.m)
+ARRAY+=(inverse/private/ft_version.m)
+ARRAY+=(plotting/private/ft_version.m)
+ARRAY+=(preproc/private/ft_version.m)
+ARRAY+=(specest/private/ft_version.m)
+ARRAY+=(utilities/ft_version.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -1157,8 +1203,6 @@ sync ${ARRAY[*]}
 # getcustompath.m
 
 ARRAY=()
-ARRAY+=(engine/private/getcustompath.m)
-ARRAY+=(peer/private/getcustompath.m)
 ARRAY+=(qsub/private/getcustompath.m)
 sync ${ARRAY[*]}
 
@@ -1166,8 +1210,6 @@ sync ${ARRAY[*]}
 # getcustompwd.m
 
 ARRAY=()
-ARRAY+=(engine/private/getcustompwd.m)
-ARRAY+=(peer/private/getcustompwd.m)
 ARRAY+=(qsub/private/getcustompwd.m)
 sync ${ARRAY[*]}
 
@@ -1179,6 +1221,7 @@ ARRAY+=(fileio/private/getdatfield.m)
 ARRAY+=(private/getdatfield.m)
 ARRAY+=(test/private/getdatfield.m)
 ARRAY+=(utilities/private/getdatfield.m)
+ARRAY+=(plotting/private/getdatfield.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -1210,8 +1253,6 @@ sync ${ARRAY[*]}
 # getglobal.m
 
 ARRAY=()
-ARRAY+=(engine/private/getglobal.m)
-ARRAY+=(peer/private/getglobal.m)
 ARRAY+=(qsub/private/getglobal.m)
 sync ${ARRAY[*]}
 
@@ -1269,7 +1310,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/getsubfield.m)
-ARRAY+=(engine/private/getsubfield.m)
 ARRAY+=(fileio/private/getsubfield.m)
 ARRAY+=(forward/private/getsubfield.m)
 ARRAY+=(inverse/private/getsubfield.m)
@@ -1313,6 +1353,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(forward/private/headsurface.m)
+ARRAY+=(inverse/private/headsurface.m)
 ARRAY+=(plotting/private/headsurface.m)
 ARRAY+=(private/headsurface.m)
 sync ${ARRAY[*]}
@@ -1397,6 +1438,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv2x2.mexw32)
+ARRAY+=(private/inv2x2.mexw32)
 ARRAY+=(src/inv2x2.mexw32)
 sync ${ARRAY[*]}
 
@@ -1405,6 +1447,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv2x2.mexw64)
+ARRAY+=(private/inv2x2.mexw64)
 ARRAY+=(src/inv2x2.mexw64)
 sync ${ARRAY[*]}
 
@@ -1413,15 +1456,8 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv3x3.m)
+ARRAY+=(private/inv3x3.m)
 ARRAY+=(src/inv3x3.m)
-sync ${ARRAY[*]}
-
-################################################################################
-# inv3x3.mexa64
-
-ARRAY=()
-ARRAY+=(connectivity/private/inv3x3.mexa64)
-ARRAY+=(src/inv3x3.mexa64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -1429,7 +1465,17 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv3x3.mexglx)
+ARRAY+=(private/inv3x3.mexglx)
 ARRAY+=(src/inv3x3.mexglx)
+sync ${ARRAY[*]}
+
+################################################################################
+# inv3x3.mexa64
+
+ARRAY=()
+ARRAY+=(connectivity/private/inv3x3.mexa64)
+ARRAY+=(private/inv3x3.mexa64)
+ARRAY+=(src/inv3x3.mexa64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -1437,6 +1483,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv3x3.mexmaci)
+ARRAY+=(private/inv3x3.mexmaci)
 ARRAY+=(src/inv3x3.mexmaci)
 sync ${ARRAY[*]}
 
@@ -1454,6 +1501,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv3x3.mexw32)
+ARRAY+=(private/inv3x3.mexw32)
 ARRAY+=(src/inv3x3.mexw32)
 sync ${ARRAY[*]}
 
@@ -1462,6 +1510,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/inv3x3.mexw64)
+ARRAY+=(private/inv3x3.mexw64)
 ARRAY+=(src/inv3x3.mexw64)
 sync ${ARRAY[*]}
 
@@ -1536,7 +1585,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/issubfield.m)
-ARRAY+=(engine/private/issubfield.m)
 ARRAY+=(fileio/private/issubfield.m)
 ARRAY+=(forward/private/issubfield.m)
 ARRAY+=(inverse/private/issubfield.m)
@@ -1553,10 +1601,8 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/istrue.m)
-ARRAY+=(engine/private/istrue.m)
 ARRAY+=(fileio/private/istrue.m)
 ARRAY+=(forward/private/istrue.m)
-ARRAY+=(peer/private/istrue.m)
 ARRAY+=(plotting/private/istrue.m)
 ARRAY+=(preproc/private/istrue.m)
 ARRAY+=(qsub/private/istrue.m)
@@ -1650,6 +1696,16 @@ ARRAY+=(forward/private/lmoutr.mexmac)
 ARRAY+=(private/lmoutr.mexmac)
 ARRAY+=(src/lmoutr.mexmac)
 ARRAY+=(utilities/private/lmoutr.mexmac)
+sync ${ARRAY[*]}
+
+################################################################################
+# lmoutr.mexmaca64
+
+ARRAY=()
+ARRAY+=(forward/private/lmoutr.mexmaca64)
+ARRAY+=(private/lmoutr.mexmaca64)
+ARRAY+=(src/lmoutr.mexmaca64)
+ARRAY+=(utilities/private/lmoutr.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -1749,6 +1805,15 @@ ARRAY+=(src/ltrisect.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# ltrisect.mexmaca64
+
+ARRAY=()
+ARRAY+=(plotting/private/ltrisect.mexmaca64)
+ARRAY+=(private/ltrisect.mexmaca64)
+ARRAY+=(src/ltrisect.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # ltrisect.mexmaci
 
 ARRAY=()
@@ -1827,6 +1892,14 @@ ARRAY+=(src/meg_leadfield1.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# meg_leadfield1.mexmaca64
+
+ARRAY=()
+ARRAY+=(forward/private/meg_leadfield1.mexmaca64)
+ARRAY+=(src/meg_leadfield1.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # meg_leadfield1.mexmaci
 
 ARRAY=()
@@ -1862,8 +1935,6 @@ sync ${ARRAY[*]}
 # memprofile.m
 
 ARRAY=()
-ARRAY+=(engine/private/memprofile.m)
-ARRAY+=(peer/private/memprofile.m)
 ARRAY+=(qsub/private/memprofile.m)
 ARRAY+=(utilities/private/memprofile.m)
 sync ${ARRAY[*]}
@@ -1872,8 +1943,6 @@ sync ${ARRAY[*]}
 # memprofile.mexa64
 
 ARRAY=()
-ARRAY+=(engine/private/memprofile.mexa64)
-ARRAY+=(peer/private/memprofile.mexa64)
 ARRAY+=(qsub/private/memprofile.mexa64)
 ARRAY+=(utilities/private/memprofile.mexa64)
 sync ${ARRAY[*]}
@@ -1882,16 +1951,22 @@ sync ${ARRAY[*]}
 # memprofile.mexglx
 
 ARRAY=()
-ARRAY+=(peer/private/memprofile.mexglx)
 ARRAY+=(qsub/private/memprofile.mexglx)
 ARRAY+=(utilities/private/memprofile.mexglx)
+sync ${ARRAY[*]}
+
+################################################################################
+# memprofile.mexmaca64
+
+ARRAY=()
+ARRAY+=(qsub/private/memprofile.mexmaca64)
+ARRAY+=(utilities/private/memprofile.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
 # memprofile.mexmaci
 
 ARRAY=()
-ARRAY+=(peer/private/memprofile.mexmaci)
 ARRAY+=(qsub/private/memprofile.mexmaci)
 ARRAY+=(utilities/private/memprofile.mexmaci)
 sync ${ARRAY[*]}
@@ -1900,8 +1975,6 @@ sync ${ARRAY[*]}
 # memprofile.mexmaci64
 
 ARRAY=()
-ARRAY+=(engine/private/memprofile.mexmaci64)
-ARRAY+=(peer/private/memprofile.mexmaci64)
 ARRAY+=(qsub/private/memprofile.mexmaci64)
 ARRAY+=(utilities/private/memprofile.mexmaci64)
 sync ${ARRAY[*]}
@@ -1985,6 +2058,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.m)
+ARRAY+=(private/mtimes2x2.m)
 ARRAY+=(src/mtimes2x2.m)
 sync ${ARRAY[*]}
 
@@ -1993,6 +2067,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.mexa64)
+ARRAY+=(private/mtimes2x2.mexa64)
 ARRAY+=(src/mtimes2x2.mexa64)
 sync ${ARRAY[*]}
 
@@ -2001,7 +2076,17 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.mexglx)
+ARRAY+=(private/mtimes2x2.mexglx)
 ARRAY+=(src/mtimes2x2.mexglx)
+sync ${ARRAY[*]}
+
+################################################################################
+# mtimes2x2.mexmaca64
+
+ARRAY=()
+ARRAY+=(connectivity/private/mtimes2x2.mexglx)
+ARRAY+=(private/mtimes2x2.mexglx)
+ARRAY+=(src/mtimes2x2.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2009,6 +2094,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.mexmaci)
+ARRAY+=(private/mtimes2x2.mexmaci)
 ARRAY+=(src/mtimes2x2.mexmaci)
 sync ${ARRAY[*]}
 
@@ -2026,6 +2112,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.mexw32)
+ARRAY+=(private/mtimes2x2.mexw32)
 ARRAY+=(src/mtimes2x2.mexw32)
 sync ${ARRAY[*]}
 
@@ -2034,6 +2121,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes2x2.mexw64)
+ARRAY+=(private/mtimes2x2.mexw64)
 ARRAY+=(src/mtimes2x2.mexw64)
 sync ${ARRAY[*]}
 
@@ -2042,6 +2130,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.m)
+ARRAY+=(private/mtimes3x3.m)
 ARRAY+=(src/mtimes3x3.m)
 sync ${ARRAY[*]}
 
@@ -2050,6 +2139,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.mexa64)
+ARRAY+=(private/mtimes3x3.mexa64)
 ARRAY+=(src/mtimes3x3.mexa64)
 sync ${ARRAY[*]}
 
@@ -2058,6 +2148,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.mexglx)
+ARRAY+=(private/mtimes3x3.mexglx)
 ARRAY+=(src/mtimes3x3.mexglx)
 sync ${ARRAY[*]}
 
@@ -2066,6 +2157,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.mexmaci)
+ARRAY+=(private/mtimes3x3.mexmaci)
 ARRAY+=(src/mtimes3x3.mexmaci)
 sync ${ARRAY[*]}
 
@@ -2083,6 +2175,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.mexw32)
+ARRAY+=(private/mtimes3x3.mexw32)
 ARRAY+=(src/mtimes3x3.mexw32)
 sync ${ARRAY[*]}
 
@@ -2091,6 +2184,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/mtimes3x3.mexw64)
+ARRAY+=(private/mtimes3x3.mexw64)
 ARRAY+=(src/mtimes3x3.mexw64)
 sync ${ARRAY[*]}
 
@@ -2136,6 +2230,15 @@ ARRAY=()
 ARRAY+=(fileio/private/mxDeserialize_c.mexmac)
 ARRAY+=(private/mxDeserialize_c.mexmac)
 ARRAY+=(src/mxDeserialize_c.mexmac)
+sync ${ARRAY[*]}
+
+################################################################################
+# mxDeserialize_c.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/mxDeserialize_c.mexmaca64)
+ARRAY+=(private/mxDeserialize_c.mexmaca64)
+ARRAY+=(src/mxDeserialize_c.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2245,6 +2348,16 @@ ARRAY+=(utilities/private/mxSerialize_c.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# mxSerialize_c.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/mxSerialize_c.mexmaca64)
+ARRAY+=(private/mxSerialize_c.mexmaca64)
+ARRAY+=(src/mxSerialize_c.mexmaca64)
+ARRAY+=(utilities/private/mxSerialize_c.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # mxSerialize_c.mexmaci
 
 ARRAY=()
@@ -2295,6 +2408,16 @@ ARRAY+=(utilities/private/mxSerialize_cpp.mexa64)
 sync ${ARRAY[*]}
 
 ################################################################################
+# mxSerialize_cpp.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/mxSerialize_cpp.mexmaca64)
+ARRAY+=(private/mxSerialize_cpp.mexmaca64)
+ARRAY+=(src/mxSerialize_cpp.mexmaca64)
+ARRAY+=(utilities/private/mxSerialize_cpp.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # mxSerialize_cpp.mexmaci64
 
 ARRAY=()
@@ -2338,6 +2461,14 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(external/stats/nanmean.mexa64)
 ARRAY+=(src/nanmean.mexa64)
+sync ${ARRAY[*]}
+
+################################################################################
+# nanmean.mexmaca64
+
+ARRAY=()
+ARRAY+=(external/stats/nanmean.mexmaca64)
+ARRAY+=(src/nanmean.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2386,6 +2517,14 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(external/stats/nanstd.mexa64)
 ARRAY+=(src/nanstd.mexa64)
+sync ${ARRAY[*]}
+
+################################################################################
+# nanstd.mexmaca64
+
+ARRAY=()
+ARRAY+=(external/stats/nanstd.mexmaca64)
+ARRAY+=(src/nanstd.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2445,6 +2584,14 @@ ARRAY+=(src/nansum.mexmaci)
 sync ${ARRAY[*]}
 
 ################################################################################
+# nansum.mexmaca64
+
+ARRAY=()
+ARRAY+=(external/stats/nansum.mexmaca64)
+ARRAY+=(src/nansum.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # nansum.mexmaci64
 
 ARRAY=()
@@ -2482,6 +2629,14 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(external/stats/nanvar.mexa64)
 ARRAY+=(src/nanvar.mexa64)
+sync ${ARRAY[*]}
+
+################################################################################
+# nanvar.mexmaca64
+
+ARRAY=()
+ARRAY+=(external/stats/nanvar.mexmaca64)
+ARRAY+=(src/nanvar.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2550,23 +2705,20 @@ ARRAY+=(private/neuralynx_getheader.m)
 sync ${ARRAY[*]}
 
 ################################################################################
-# normals.m
-
-ARRAY=()
-ARRAY+=(fileio/private/normals.m)
-ARRAY+=(forward/private/normals.m)
-ARRAY+=(plotting/private/normals.m)
-ARRAY+=(private/normals.m)
-ARRAY+=(test/private/normals.m)
-sync ${ARRAY[*]}
-
-################################################################################
 # offset2time.m
 
 ARRAY=()
 ARRAY+=(contrib/spike/private/offset2time.m)
 ARRAY+=(private/offset2time.m)
 ARRAY+=(utilities/private/offset2time.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# open_figure.m
+
+ARRAY=()
+ARRAY+=(private/open_figure.m)
+ARRAY+=(realtime/online_meg/private/open_figure.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2577,6 +2729,14 @@ ARRAY+=(contrib/nutmegtrip/private/parameterselection.m)
 ARRAY+=(fileio/private/parameterselection.m)
 ARRAY+=(private/parameterselection.m)
 ARRAY+=(utilities/private/parameterselection.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# parsekeyboardevent.m
+
+ARRAY=()
+ARRAY+=(private/parsekeyboardevent.m)
+ARRAY+=(realtime/online_meg/private/parsekeyboardevent.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2601,8 +2761,6 @@ sync ${ARRAY[*]}
 # platform.h
 
 ARRAY=()
-ARRAY+=(engine/private/platform.h)
-ARRAY+=(peer/src/platform.h)
 ARRAY+=(realtime/src/buffer/src/platform.h)
 ARRAY+=(src/platform.h)
 sync ${ARRAY[*]}
@@ -2650,6 +2808,15 @@ ARRAY=()
 ARRAY+=(forward/private/plgndr.mexmac)
 ARRAY+=(private/plgndr.mexmac)
 ARRAY+=(src/plgndr.mexmac)
+sync ${ARRAY[*]}
+
+################################################################################
+# plgndr.mexmaca64
+
+ARRAY=()
+ARRAY+=(forward/private/plgndr.mexmaca64)
+ARRAY+=(private/plgndr.mexmaca64)
+ARRAY+=(src/plgndr.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2732,10 +2899,17 @@ ARRAY+=(private/preproc.m)
 sync ${ARRAY[*]}
 
 ################################################################################
+# printor.m
+
+ARRAY=()
+ARRAY+=(utilities/private/printor.m)
+ARRAY+=(fileio/private/printor.m)
+sync ${ARRAY[*]}
+
+################################################################################
 # print_mem.m
 
 ARRAY=()
-ARRAY+=(engine/private/print_mem.m)
 ARRAY+=(qsub/private/print_mem.m)
 sync ${ARRAY[*]}
 
@@ -2743,8 +2917,6 @@ sync ${ARRAY[*]}
 # print_tim.m
 
 ARRAY=()
-ARRAY+=(engine/private/print_tim.m)
-ARRAY+=(peer/private/print_tim.m)
 ARRAY+=(private/print_tim.m)
 ARRAY+=(qsub/private/print_tim.m)
 sync ${ARRAY[*]}
@@ -2771,7 +2943,6 @@ sync ${ARRAY[*]}
 # pthreadGC2-w64.dll
 
 ARRAY=()
-ARRAY+=(peer/bin/pthreadGC2-w64.dll)
 ARRAY+=(realtime/src/external/pthreads-win64/lib/pthreadGC2-w64.dll)
 sync ${ARRAY[*]}
 
@@ -2780,7 +2951,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(fileio/private/pthreadGC2.dll)
-ARRAY+=(peer/bin/pthreadGC2.dll)
 ARRAY+=(realtime/bin/win32/pthreadGC2.dll)
 ARRAY+=(realtime/src/external/pthreads-win32/lib/pthreadGC2.dll)
 sync ${ARRAY[*]}
@@ -2822,6 +2992,16 @@ ARRAY+=(forward/private/ptriproj.mexmac)
 ARRAY+=(private/ptriproj.mexmac)
 ARRAY+=(src/ptriproj.mexmac)
 ARRAY+=(utilities/private/ptriproj.mexmac)
+sync ${ARRAY[*]}
+
+################################################################################
+# ptriproj.mexmaca64
+
+ARRAY=()
+ARRAY+=(forward/private/ptriproj.mexmaca64)
+ARRAY+=(private/ptriproj.mexmaca64)
+ARRAY+=(src/ptriproj.mexmaca64)
+ARRAY+=(utilities/private/ptriproj.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -2973,6 +3153,14 @@ ARRAY+=(src/read_24bit.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# read_24bit.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/read_24bit.mexmaca64)
+ARRAY+=(src/read_24bit.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # read_24bit.mexmaci
 
 ARRAY=()
@@ -3074,6 +3262,26 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(private/remove_vertices.m)
 ARRAY+=(fileio/private/remove_vertices.m)
+ARRAY+=(forward/private/remove_vertices.m)
+ARRAY+=(plotting/private/remove_vertices.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# remove_double_vertices.m
+
+ARRAY=()
+ARRAY+=(private/remove_double_vertices.m)
+ARRAY+=(forward/private/remove_double_vertices.m)
+ARRAY+=(fileio/private/remove_double_vertices.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# remove_unused_vertices.m
+
+ARRAY=()
+ARRAY+=(private/remove_unused_vertices.m)
+ARRAY+=(forward/private/remove_unused_vertices.m)
+ARRAY+=(fileio/private/remove_unused_vertices.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -3082,6 +3290,14 @@ sync ${ARRAY[*]}
 ARRAY=()
 ARRAY+=(qsub/private/rename.mexa64)
 ARRAY+=(src/rename.mexa64)
+sync ${ARRAY[*]}
+
+################################################################################
+# rename.mexmaca64
+
+ARRAY=()
+ARRAY+=(qsub/private/rename.mexmaca64)
+ARRAY+=(src/rename.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -3133,6 +3349,14 @@ ARRAY+=(src/rfbevent.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# rfbevent.mexmaca64
+
+ARRAY=()
+ARRAY+=(fileio/private/rfbevent.mexmaca64)
+ARRAY+=(src/rfbevent.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # rfbevent.mexmaci64
 
 ARRAY=()
@@ -3154,7 +3378,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/rmsubfield.m)
-ARRAY+=(engine/private/rmsubfield.m)
 ARRAY+=(fileio/private/rmsubfield.m)
 ARRAY+=(forward/private/rmsubfield.m)
 ARRAY+=(plotting/private/rmsubfield.m)
@@ -3213,6 +3436,15 @@ ARRAY+=(src/routlm.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# routlm.mexmaca64
+
+ARRAY=()
+ARRAY+=(forward/private/routlm.mexmaca64)
+ARRAY+=(private/routlm.mexmaca64)
+ARRAY+=(src/routlm.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # routlm.mexmaci
 
 ARRAY=()
@@ -3253,6 +3485,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.m)
+ARRAY+=(private/sandwich2x2.m)
 ARRAY+=(src/sandwich2x2.m)
 sync ${ARRAY[*]}
 
@@ -3261,6 +3494,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.mexa64)
+ARRAY+=(private/sandwich2x2.mexa64)
 ARRAY+=(src/sandwich2x2.mexa64)
 sync ${ARRAY[*]}
 
@@ -3269,7 +3503,17 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.mexglx)
+ARRAY+=(private/sandwich2x2.mexglx)
 ARRAY+=(src/sandwich2x2.mexglx)
+sync ${ARRAY[*]}
+
+################################################################################
+# sandwich2x2.mexmaca64
+
+ARRAY=()
+ARRAY+=(connectivity/private/sandwich2x2.mexmaca64)
+ARRAY+=(private/sandwich2x2.mexmaca64)
+ARRAY+=(src/sandwich2x2.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -3277,6 +3521,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.mexmaci)
+ARRAY+=(private/sandwich2x2.mexmaci)
 ARRAY+=(src/sandwich2x2.mexmaci)
 sync ${ARRAY[*]}
 
@@ -3294,6 +3539,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.mexw32)
+ARRAY+=(private/sandwich2x2.mexw32)
 ARRAY+=(src/sandwich2x2.mexw32)
 sync ${ARRAY[*]}
 
@@ -3302,6 +3548,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich2x2.mexw64)
+ARRAY+=(private/sandwich2x2.mexw64)
 ARRAY+=(src/sandwich2x2.mexw64)
 sync ${ARRAY[*]}
 
@@ -3310,6 +3557,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.m)
+ARRAY+=(private/sandwich3x3.m)
 ARRAY+=(src/sandwich3x3.m)
 sync ${ARRAY[*]}
 
@@ -3318,6 +3566,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.mexa64)
+ARRAY+=(private/sandwich3x3.mexa64)
 ARRAY+=(src/sandwich3x3.mexa64)
 sync ${ARRAY[*]}
 
@@ -3326,7 +3575,17 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.mexglx)
+ARRAY+=(private/sandwich3x3.mexglx)
 ARRAY+=(src/sandwich3x3.mexglx)
+sync ${ARRAY[*]}
+
+################################################################################
+# sandwich3x3.mexmaca64
+
+ARRAY=()
+ARRAY+=(connectivity/private/sandwich3x3.mexmaca64)
+ARRAY+=(private/sandwich3x3.mexmaca64)
+ARRAY+=(src/sandwich3x3.mexmaca64)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -3334,6 +3593,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.mexmaci)
+ARRAY+=(private/sandwich3x3.mexmaci)
 ARRAY+=(src/sandwich3x3.mexmaci)
 sync ${ARRAY[*]}
 
@@ -3351,6 +3611,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.mexw32)
+ARRAY+=(private/sandwich3x3.mexw32)
 ARRAY+=(src/sandwich3x3.mexw32)
 sync ${ARRAY[*]}
 
@@ -3359,6 +3620,7 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/sandwich3x3.mexw64)
+ARRAY+=(private/sandwich3x3.mexw64)
 ARRAY+=(src/sandwich3x3.mexw64)
 sync ${ARRAY[*]}
 
@@ -3449,8 +3711,6 @@ sync ${ARRAY[*]}
 # setcustompath.m
 
 ARRAY=()
-ARRAY+=(engine/private/setcustompath.m)
-ARRAY+=(peer/private/setcustompath.m)
 ARRAY+=(qsub/private/setcustompath.m)
 sync ${ARRAY[*]}
 
@@ -3458,8 +3718,6 @@ sync ${ARRAY[*]}
 # setcustompwd.m
 
 ARRAY=()
-ARRAY+=(engine/private/setcustompwd.m)
-ARRAY+=(peer/private/setcustompwd.m)
 ARRAY+=(qsub/private/setcustompwd.m)
 sync ${ARRAY[*]}
 
@@ -3467,8 +3725,6 @@ sync ${ARRAY[*]}
 # setglobal.m
 
 ARRAY=()
-ARRAY+=(engine/private/setglobal.m)
-ARRAY+=(peer/private/setglobal.m)
 ARRAY+=(qsub/private/setglobal.m)
 sync ${ARRAY[*]}
 
@@ -3477,7 +3733,6 @@ sync ${ARRAY[*]}
 
 ARRAY=()
 ARRAY+=(connectivity/private/setsubfield.m)
-ARRAY+=(engine/private/setsubfield.m)
 ARRAY+=(fileio/private/setsubfield.m)
 ARRAY+=(forward/private/setsubfield.m)
 ARRAY+=(plotting/private/setsubfield.m)
@@ -3570,6 +3825,19 @@ ARRAY+=(src/solid_angle.mexmac)
 sync ${ARRAY[*]}
 
 ################################################################################
+# solid_angle.mexmaca64
+
+ARRAY=()
+ARRAY+=(external/dipoli/private/solid_angle.mexmaca64)
+ARRAY+=(external/openmeeg/private/solid_angle.mexmaca64)
+ARRAY+=(forward/private/solid_angle.mexmaca64)
+ARRAY+=(inverse/private/solid_angle.mexmaca64)
+ARRAY+=(plotting/private/solid_angle.mexmaca64)
+ARRAY+=(private/solid_angle.mexmaca64)
+ARRAY+=(src/solid_angle.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
 # solid_angle.mexmaci
 
 ARRAY=()
@@ -3655,12 +3923,45 @@ ARRAY+=(utilities/strel_bol.m)
 sync ${ARRAY[*]}
 
 ################################################################################
-# surfaceorientation.m
+# surface_normals.m
 
 ARRAY=()
-ARRAY+=(forward/private/surfaceorientation.m)
-ARRAY+=(plotting/private/surfaceorientation.m)
-ARRAY+=(private/surfaceorientation.m)
+ARRAY+=(external/openmeeg/private/surface_normals.m)
+ARRAY+=(fileio/private/surface_normals.m)
+ARRAY+=(forward/private/surface_normals.m)
+ARRAY+=(plotting/private/surface_normals.m)
+ARRAY+=(private/surface_normals.m)
+ARRAY+=(test/private/surface_normals.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# surface_orientation.m
+
+ARRAY=()
+ARRAY+=(forward/private/surface_orientation.m)
+ARRAY+=(inverse/private/surface_orientation.m)
+ARRAY+=(plotting/private/surface_orientation.m)
+ARRAY+=(private/surface_orientation.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# surface_inside.m
+
+ARRAY=()
+ARRAY+=(external/dipoli/private/surface_inside.m)
+ARRAY+=(external/openmeeg/private/surface_inside.m)
+ARRAY+=(fileio/private/surface_inside.m)
+ARRAY+=(forward/private/surface_inside.m)
+ARRAY+=(inverse/private/surface_inside.m)
+ARRAY+=(private/surface_inside.m)
+sync ${ARRAY[*]}
+
+################################################################################
+# surface_shift
+
+ARRAY=()
+ARRAY+=(forward/private/surface_shift.m)
+ARRAY+=(private/surface_shift.m)
 sync ${ARRAY[*]}
 
 ################################################################################
@@ -3676,9 +3977,7 @@ sync ${ARRAY[*]}
 # tokenize.m
 
 ARRAY=()
-ARRAY+=(engine/private/tokenize.m)
 ARRAY+=(fileio/private/tokenize.m)
-ARRAY+=(peer/private/tokenize.m)
 ARRAY+=(qsub/private/tokenize.m)
 ARRAY+=(utilities/tokenize.m)
 sync ${ARRAY[*]}
@@ -3798,7 +4097,6 @@ sync ${ARRAY[*]}
 # watchdog.m
 
 ARRAY=()
-ARRAY+=(peer/private/watchdog.m)
 ARRAY+=(qsub/private/watchdog.m)
 sync ${ARRAY[*]}
 
@@ -3806,7 +4104,6 @@ sync ${ARRAY[*]}
 # watchdog.mexa64
 
 ARRAY=()
-ARRAY+=(peer/private/watchdog.mexa64)
 ARRAY+=(qsub/private/watchdog.mexa64)
 sync ${ARRAY[*]}
 
@@ -3814,7 +4111,6 @@ sync ${ARRAY[*]}
 # watchdog.mexglx
 
 ARRAY=()
-ARRAY+=(peer/private/watchdog.mexglx)
 ARRAY+=(qsub/private/watchdog.mexglx)
 sync ${ARRAY[*]}
 
@@ -3822,7 +4118,13 @@ sync ${ARRAY[*]}
 # watchdog.mexmaci
 
 ARRAY=()
-ARRAY+=(peer/private/watchdog.mexmaci)
+ARRAY+=(qsub/private/watchdog.mexmaca64)
+sync ${ARRAY[*]}
+
+################################################################################
+# watchdog.mexmaci
+
+ARRAY=()
 ARRAY+=(qsub/private/watchdog.mexmaci)
 sync ${ARRAY[*]}
 
@@ -3830,7 +4132,6 @@ sync ${ARRAY[*]}
 # watchdog.mexmaci64
 
 ARRAY=()
-ARRAY+=(peer/private/watchdog.mexmaci64)
 ARRAY+=(qsub/private/watchdog.mexmaci64)
 sync ${ARRAY[*]}
 

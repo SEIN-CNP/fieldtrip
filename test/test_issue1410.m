@@ -1,8 +1,9 @@
 function test_issue1410
 
-% MEM 6gb
+% MEM 4gb
 % WALLTIME 00:20:00
 % DEPENDENCY
+% DATA private
 
 load(dccnpath('/home/common/matlab/fieldtrip/data/test/latest/raw/meg/preproc_ctf151.mat'), 'data');
 grad = data.grad;
@@ -116,8 +117,8 @@ freq_exp           = ft_selectdata(cfg, freq_cmb);
 %%
 % this is used both for visual gamma and beta coherence
 
-load(dccnpath('/home/common/matlab/fieldtrip/data/ftp/tutorial/beamformer_extended/hdm.mat'))
-load(dccnpath('/home/common/matlab/fieldtrip/data/ftp/tutorial/beamformer_extended/sourcemodel.mat'))
+load(dccnpath('/home/common/matlab/fieldtrip/data/ftp/tutorial/beamformingextended/hdm.mat'))
+load(dccnpath('/home/common/matlab/fieldtrip/data/ftp/tutorial/beamformingextended/sourcemodel.mat'))
 
 cfg             = [];
 cfg.sourcemodel = sourcemodel;
